@@ -72,10 +72,14 @@ Install
 Architecture
 ------------
 
+Extension of Python package `pymemcache <https://pypi.python.org/pypi/pymemcache>`_ returning ``from pymemcache.client.hash import HashClient``
+and configured using either ``~/.pymemcache.json`` or ``pymemcache.json``.
 
 Functions
 ---------
 
+``class PymemcacheClient``: Prepare a Pymemcache Client using available configuration for host, port, and if available
+        elastic_cache.
 
 Dependencies
 ------------

@@ -12,7 +12,8 @@ from pymemcache.client.hash import HashClient
 
 class PymemcacheClient(object):
     def __init__(self, config=None, product=None, required_fields=None, config_file=None, **kwargs):
-        """Prepare a Client that can make HTTP calls and return it.
+        """Prepare a Pymemcache Client using available configuration for host, port, and if available
+        elastic_cache.
 
         Keyword arguments:
         config
