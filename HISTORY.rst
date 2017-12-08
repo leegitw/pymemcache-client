@@ -3,6 +3,13 @@
 Release History
 ===============
 
+0.2.0 (2016-12-08)
+------------------
+- Alpha
+- More robust JSON configuration
+- Handles ``pymemcache.client.hash.HashClient``
+- Handles ``pymemcache.client.base.Client``
+
 0.1.0 (2016-12-07)
 ------------------
 - First Release

@@ -47,7 +47,7 @@ CLASSIFIERS = [
     #   3 - Alpha
     #   4 - Beta
     #   5 - Production/Stable
-    'Development Status :: 5 - Production/Stable',
+    'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Operating System :: OS Independent',
     'Natural Language :: English',

@@ -7,27 +7,78 @@ import os
 import ujson as json
 import telnetlib
 import re
+import socket
 from pymemcache.client.hash import HashClient
+from pymemcache.client.base import Client as BasicClient
 # from pprintpp import pprint
 
 class PymemcacheClient(object):
-    def __init__(self, config=None, product=None, required_fields=None, config_file=None, **kwargs):
-        """Prepare a Pymemcache Client using available configuration for host, port, and if available
-        elastic_cache.
+
+    _memcached_servers = []
+    _client_type = None
+    _server_type = None
+    _cache_client = None
+
+    _config = {
+        "client_type": "basic",
+        "servers": [
+            {
+                "host": "localhost",
+                "port": 11211
+            }
+        ],
+        "server_type": "standard",
+        "connect_timeout": None,
+        "timeout": None,
+        "no_delay": False,
+        "ignore_exc": False,
+        "default_noreply": True,
+        "allow_unicode_keys": False,
+    }
+
+    @property
+    def memcached_servers(self):
+        return self._memcached_servers
+
+    @property
+    def client_type(self):
+        return self._client_type
+    @client_type.setter
+    def client_type(self, value):
+        self._client_type = value
+
+    @property
+    def server_type(self):
+        return self._server_type
+    @server_type.setter
+    def server_type(self, value):
+        self._server_type = value
+
+    @property
+    def config(self):
+        return self._config
+    @config.setter
+    def config(self, value):
+        self._config = value
+
+    @property
+    def cache_client(self):
+        return self._cache_client
+    @cache_client.setter
+    def cache_client(self, value):
+        self._cache_client = value
+
+    def __init__(self, config=None, config_file=None, **kwargs):
+        """Prepare a Pymemcache client using available configuration.
 
         Keyword arguments:
         config
-        product
-        required_fields
         config_file
+        kwargs
         """
 
         if config is None:
-            config = {
-                "host": None,
-                "port": None,
-                "elastic_cache": None,
-            }
+            config = self.config
 
         try:
             config = configFromFile(config, os.path.expanduser("~/.pymemcache.json"))
@@ -35,28 +86,100 @@ class PymemcacheClient(object):
             pass
 
         config = configFromEnv(config)
-        config = configFromEnv(config, product)
-        config = configFromFile(config, "pymemcache.json", product)
-        config = configFromFile(config, config_file, product)
+        config = configFromFile(config, "pymemcache.json")
+        config = configFromFile(config, config_file)
         config = configFromArgs(config, **kwargs)
 
-        if required_fields is None:
-            required_fields = ["host", "port"]
+        required_fields = ["servers"]
+
+        optional_fields = [
+            "client_type",
+            "server_type",
+            "connect_timeout",
+            "timeout",
+            "no_delay",
+            "ignore_exc",
+            "default_noreply",
+            "allow_unicode_keys"
+        ]
 
         for field in required_fields:
-            if config[field] is None:
+            if field not in config or config[field] is None:
                 raise ValueError("No %s set. %s is a required field." % (field, field))
+
+        for field in optional_fields:
+            if field not in config:
+                config[field] = self.config[field]
+
+        if "client_type" in config:
+            if config["client_type"] not in ["basic", "hash"]:
+                raise ValueError("Value in %s is not valid: '%s'." % ("client_type", config["client_type"]))
+
+            self.client_type = config["client_type"]
+        else:
+            self.client_type = "basic"
+
+        if "server_type" in config:
+            if config["server_type"] not in ["standard", "elasticache"]:
+                raise ValueError("Value in %s is not valid: '%s'." % ("server_type", config["server_type"]))
+
+            self.server_type = config["server_type"]
+        else:
+            self.server_type = "standard"
+
+        if "servers" in config and (type(config["servers"]) is not list or len(config["servers"]) == 0):
+            raise ValueError("No %s set. %s must of be a list of 1 or more values." % ("servers", "servers"))
+
+        if self.client_type == "basic" and len(config["servers"]) > 1:
+            raise ValueError("Client type '%s' cannot have more than 1 server: %d" % (self.client_type, len(config["servers"])))
 
         for k, v in config.items():
             setattr(self, k, v)
 
-        if "elastic_cache" in config and config["elastic_cache"]:
-            self.cache_servers = self.aws_elasticache_endpoints(config["host"], config["port"])
-        else:
-            self.cache_servers = [(config["host"], config["port"])]
+        self._memcached_servers = []
+        required_server_fields = ["host", "port"]
+        for server in config["servers"]:
+            for field in required_server_fields:
+                if field not in server or server[field] is None:
+                    raise ValueError("No %s set in server. %s is a required field." % (field, field))
+
+            host = socket.gethostbyname("localhost") if server["host"] == "localhost" else server["host"]
+
+            if "server_type" in config and config["server_type"] == "elasticache":
+                self._memcached_servers.append(self.aws_elasticache_endpoints(host, server["port"]))
+            else:
+                self._memcached_servers.append((host, server["port"]))
 
         self.cache_error = None
-        self.cache_client = HashClient(servers=self.cache_servers)
+
+        if type(self.memcached_servers) is not list or len(self.memcached_servers) == 0:
+            raise ValueError("Memcache type '%s' has not been assigned any servers." % (self.client_type))
+
+        if self.client_type == "hash":
+            self.cache_client = HashClient(
+                servers=self.memcached_servers,
+                connect_timeout=config["connect_timeout"],
+                timeout=config["timeout"],
+                no_delay=config["no_delay"],
+                ignore_exc=config["ignore_exc"],
+                allow_unicode_keys=config["allow_unicode_keys"]
+            )
+        elif self.client_type == "basic":
+            if len(self.memcached_servers) != 1:
+                raise ValueError("Memcache type '%s' must be assigned only 1 server." % (self.client_type))
+
+            self.cache_client = BasicClient(
+                server=self.memcached_servers[0],
+                connect_timeout=config["connect_timeout"],
+                timeout=config["timeout"],
+                no_delay=config["no_delay"],
+                allow_unicode_keys=config["allow_unicode_keys"]
+            )
+        else:
+            raise ValueError("Unexpected memcache type: '%s'." % (self.client_type))
+
+        if self.cache_client is None:
+            raise ValueError("Memcache client not created for type '%s'." % (self.client_type))
 
     def aws_elasticache_endpoints(self, host, port):
         # We're using elasticache cache engine >= 1.4.14 "config get" must be used
@@ -86,7 +209,7 @@ class PymemcacheClient(object):
         return servers
 
 
-def configFromFile(config, path, product=None):
+def configFromFile(config, path):
     if path is None:
         return config
     if not os.path.exists(path):
@@ -102,18 +225,14 @@ def configFromFile(config, path, product=None):
     for k in raw.keys():
         if k in config:
             config[k] = raw[k]
-    if product is not None:
-        if product in raw:
-            for k in raw[product].keys():
-                config[k] = raw[product][k]
+
     return config
 
 
-def configFromEnv(config, product=None):
-    if product is None:
-        product = "pymemcache"
+def configFromEnv(config):
+    ENV_PREFIX = "PYMEMCACHE"
     for k in config.keys():
-        key = "%s_%s" % (product, k)
+        key = "%s_%s" % (ENV_PREFIX, k)
         if key.upper() in os.environ:
             config[k] = os.environ[key.upper()]
     return config

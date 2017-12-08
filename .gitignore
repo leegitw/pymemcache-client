@@ -1,6 +1,5 @@
 *.pyc
 *.swp
-*.json
 .idea
 *.egg-info/
 

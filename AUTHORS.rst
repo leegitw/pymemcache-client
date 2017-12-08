@@ -1,10 +1,9 @@
-`pycountry-convert` is written and maintained by many contributors.
+`pymemcache-client` is written and maintained by many contributors.
 
-pycountry-convert: Authors
+pymemcache-client: Authors
 ````````````````````````````
 
-We'd like to thank the following people who have contributed to the `pycountry-convert` repository.
+We'd like to thank the following people who have contributed to the `pymemcache-client` repository.
 
-- Ian Molee <ian@tune.com>
 - Ohad Lahav <ohad@tune.com>
 - Jeff Tanner <jefft@tune.com>

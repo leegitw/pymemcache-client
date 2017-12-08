@@ -196,28 +196,26 @@ list-package: site-packages
 	@echo "======================================================"
 	ls -al $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
 
-run-example: local-dev
+run-example:
 	@echo "======================================================"
 	@echo run-example
 	@echo "======================================================"
-	$(eval export PYMEMCACHE_HOST=$(shell jq .host pymemcache.json))
-	@printenv | grep PYMEMCACHE_HOST
-	$(eval export PYMEMCACHE_PORT=$(shell jq .port pymemcache.json))
-	@printenv | grep PYMEMCACHE_PORT
-	$(eval export PYMEMCACHE_ELASTIC_CACHE=$(shell jq .elastic_cache pymemcache.json))
-	@printenv | grep PYMEMCACHE_ELASTIC_CACHE
-	$(PYTHON3) examples/*.py
+	@echo example_pymemcache_basic
+	@echo "======================================================"
+	$(PYTHON3) examples/example_pymemcache_basic.py
+	@echo "======================================================"
+	@echo example_pymemcache_hash
+	@echo "======================================================"
+	$(PYTHON3) examples/example_pymemcache_hash.py
+	@echo "======================================================"
+	@echo example_pymemcache_client
+	@echo "======================================================"
+	$(PYTHON3) examples/example_pymemcache_client.py
 
-test: local-dev
+test:
 	@echo "======================================================"
 	@echo test
 	@echo "======================================================"
-	$(eval export PYMEMCACHE_HOST=$(shell jq .host pymemcache.json))
-	@printenv | grep PYMEMCACHE_HOST
-	$(eval export PYMEMCACHE_PORT=$(shell jq .port pymemcache.json))
-	@printenv | grep PYMEMCACHE_PORT
-	$(eval export PYMEMCACHE_ELASTIC_CACHE=$(shell jq .elastic_cache pymemcache.json))
-	@printenv | grep PYMEMCACHE_ELASTIC_CACHE
 	py.test --verbose tests
 
 test-travis-ci: local-dev
