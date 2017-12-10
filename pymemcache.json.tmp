@@ -1,0 +1,16 @@
+{
+    "client_type": "[OPTIONAL str, DEFAULT basic]",
+    "servers": [
+        {
+            "host": "[str]",
+            "port": [int]
+        }
+    ]
+    "server_type": "[OPTIONAL str, DEFAULT standard]",
+    "connect_timeout": [OPTIONAL float],
+    "timeout": [OPTIONAL float],
+    "no_delay": [OPTIONAL bool, DEFAULT false],
+    "ignore_exc": [OPTIONAL bool, DEFAULT false],
+    "default_noreply": [OPTIONAL bool, DEFAULT true],
+    "allow_unicode_keys": [OPTIONAL bool, DEFAULT false]
+}

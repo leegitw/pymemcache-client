@@ -1,0 +1,14 @@
+*.pyc
+*.swp
+.idea
+*.egg-info/
+
+# pytest
+.cache/*
+htmlcov/*
+.coverage
+
+# distribution
+.eggs/*
+dist/*
+build/
