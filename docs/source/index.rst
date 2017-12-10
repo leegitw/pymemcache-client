@@ -1,7 +1,14 @@
-.. -*- mode: rst -*-
 
 pymemcache-client
------------------
+=================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+Introduction
+------------
 
 Extension of Python package `pymemcache <https://pypi.python.org/pypi/pymemcache>`_ providing client configuration.
 
@@ -84,16 +91,10 @@ To run examples and tests locally upon **"localhost"**, memcached must be instal
     $ brew install memcached
 
     ==> Installing memcached
-    ==> Downloading https://homebrew.bintray.com/bottles/memcached-1.5.3.sierra.bottle.tar.gz
     ######################################################################## 100.0%
     ==> Pouring memcached-1.5.3.sierra.bottle.tar.gz
     ==> Caveats
-    To have launchd start memcached now and restart at login:
-      brew services start memcached
-    Or, if you don't want/need a background service you can just run:
-      /usr/local/opt/memcached/bin/memcached
     ==> Summary
-    🍺  /usr/local/Cellar/memcached/1.5.3: 11 files, 198.7KB
 
 
 **Start memcached using brew**
@@ -103,6 +104,7 @@ To run examples and tests locally upon **"localhost"**, memcached must be instal
     $ brew services start memcached
 
     ==> Successfully started `memcached` (label: homebrew.mxcl.memcached)
+
 
 Architecture
 ------------
@@ -128,6 +130,7 @@ Configuration
 
 This is the expected configuration that can be provided to ``class PymemcacheClient`` is in JSON format:
 
+
 .. code-block:: text
 
     {
@@ -146,6 +149,7 @@ This is the expected configuration that can be provided to ``class PymemcacheCli
         "default_noreply": [OPTIONAL bool, DEFAULT true],
         "allow_unicode_keys": [OPTIONAL bool, DEFAULT false]
     }
+
 
 - ``"client_type"``: [OPTIONAL] Type of memcached client, DEFAULT ``"basic"``
     + ``"basic"``: Memcached client using ``from pymemcache.client.base import Client``. A client for a single memcached server.
