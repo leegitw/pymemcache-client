@@ -37,9 +37,9 @@ Badges
     :alt: Contributors
     :target: https://github.com/tuneinc/pymemcache-client/graphs/contributors
 
-.. |license| image:: https://img.shields.io/:license-apache-blue.svg
-    :alt: License
-    :target: https://opensource.org/licenses/Apache-2.0
+.. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :alt: License Status
+    :target: https://opensource.org/licenses/MIT
 
 .. |travis| image:: https://travis-ci.org/tuneinc/pymemcache-client.svg?branch=master
     :alt: Travis-CI Build Status

@@ -8,7 +8,7 @@ __version__ = '0.3.0'
 __version_info__ = tuple(__version__.split('.'))
 
 __author__ = 'jefft@tune.com'
-__license__ = 'Apache 2.0'
+__license__ = 'MIT License'
 
 __python_required_version__ = (3, 0)
 
