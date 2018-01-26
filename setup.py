@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #  @namespace pymemcache-client
 #
-#    Copyright (c) 2017 TUNE, Inc.
+#    Copyright (c) 2018 TUNE, Inc.
 #    All rights reserved.
 #
 
@@ -51,7 +51,7 @@ CLASSIFIERS = [
     'Intended Audience :: Developers',
     'Operating System :: OS Independent',
     'Natural Language :: English',
-    'License :: OSI Approved :: Apache Software License',
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
@@ -70,12 +70,12 @@ setup(
     version=version,
     description='Extension of Python package pymemcache providing client configuration through pymemcache.json.',
     long_description=readme + '\n\n' + history,
-    author='TUNE Inc., TuneLab',
+    author='TUNE Inc.',
     author_email='jefft@tune.com',
-    url='https://github.com/TuneLab/pymemcache-client',
-    download_url='https://github.com/TuneLab/pymemcache-client/archive/v{0}.tar.gz'.format(version),
-    keywords="pymemcache client tune multiverse",
-    license='Apache 2.0',
+    url='https://github.com/tuneinc/pymemcache-client',
+    download_url='https://github.com/tuneinc/pymemcache-client/archive/v{0}.tar.gz'.format(version),
+    keywords="pymemcache client tune",
+    license='MIT License',
     zip_safe=False,
     install_requires=REQUIREMENTS,
     packages=PACKAGES,

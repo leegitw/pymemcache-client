@@ -29,25 +29,25 @@ Badges
     :alt: Documentation Status
     :target: http://pymemcache-client.readthedocs.io
 
-.. |hits| image:: http://hits.dwyl.io/TuneLab/pymemcache-client.svg
+.. |hits| image:: http://hits.dwyl.io/tuneinc/pymemcache-client.svg
     :alt: Hits
-    :target: http://hits.dwyl.io/TuneLab/pymemcache-client
+    :target: http://hits.dwyl.io/tuneinc/pymemcache-client
 
-.. |contributors| image:: https://img.shields.io/github/contributors/TuneLab/pymemcache-client.svg
+.. |contributors| image:: https://img.shields.io/github/contributors/tuneinc/pymemcache-client.svg
     :alt: Contributors
-    :target: https://github.com/TuneLab/pymemcache-client/graphs/contributors
+    :target: https://github.com/tuneinc/pymemcache-client/graphs/contributors
 
-.. |license| image:: https://img.shields.io/:license-apache-blue.svg
-    :alt: License
-    :target: https://opensource.org/licenses/Apache-2.0
+.. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :alt: License Status
+    :target: https://opensource.org/licenses/MIT
 
-.. |travis| image:: https://travis-ci.org/TuneLab/pymemcache-client.svg?branch=master
+.. |travis| image:: https://travis-ci.org/tuneinc/pymemcache-client.svg?branch=master
     :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/TuneLab/pymemcache-client
+    :target: https://travis-ci.org/tuneinc/pymemcache-client
 
-.. |coveralls| image:: https://coveralls.io/repos/TuneLab/pymemcache-client/badge.svg?branch=master&service=github
+.. |coveralls| image:: https://coveralls.io/repos/tuneinc/pymemcache-client/badge.svg?branch=master&service=github
     :alt: Code Coverage Status
-    :target: https://coveralls.io/r/TuneLab/pymemcache-client
+    :target: https://coveralls.io/r/tuneinc/pymemcache-client
 
 .. |version| image:: https://img.shields.io/pypi/v/pymemcache-client.svg?style=flat
     :alt: PyPI Package latest release
@@ -57,9 +57,9 @@ Badges
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/pymemcache-client
 
-.. |requires| image:: https://requires.io/github/TuneLab/pymemcache-client/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/tuneinc/pymemcache-client/requirements.svg?branch=master
     :alt: Requirements Status
-    :target: https://requires.io/github/TuneLab/pymemcache-client/requirements/?branch=master
+    :target: https://requires.io/github/tuneinc/pymemcache-client/requirements/?branch=master
 
 .. end-badges
 
